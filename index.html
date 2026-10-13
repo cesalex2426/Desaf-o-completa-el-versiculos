@@ -1,73 +1,624 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<title>Reto Bíblico - Job 1:1-22</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #172033;
+}
+
+header {
+  background: #172554;
+  color: white;
+  text-align: center;
+  padding: 25px 12px;
+  border-bottom: 5px solid #eab308;
+}
+
+header h1 { margin: 0 0 8px; font-size: 26px; }
+header p { margin: 5px 0; }
+
+.etiqueta {
+  display: inline-block;
+  background: #facc15;
+  color: #422006;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+main {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 0 12px 25px;
+}
+
+.panel {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px #0000000d;
+}
+
+h2 { color: #172554; margin-top: 0; }
+
+input[type="text"] {
+  display: block;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 52px;
+  margin: 12px 0;
+  padding: 13px;
+  border: 2px solid #94a3b8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 18px;
+  pointer-events: auto;
+  touch-action: manipulation;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+input[type="text"]:focus {
+  outline: 3px solid #bfdbfe;
+  border-color: #2563eb;
+}
+
+button {
+  display: inline-block;
+  min-height: 46px;
+  padding: 12px 17px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:disabled { opacity: .6; }
+
+.primario { background: #2563eb; color: white; }
+.secundario { background: #e2e8f0; color: #172033; }
+.dorado { background: #facc15; color: #422006; }
+
+.ancho { width: 100%; }
+.oculto { display: none !important; }
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.estadistica {
+  text-align: center;
+  background: white;
+  padding: 12px 4px;
+  border-radius: 12px;
+}
+
+.estadistica strong {
+  display: block;
+  color: #1d4ed8;
+  font-size: 22px;
+}
+
+.estadistica span { font-size: 12px; }
+
+.progreso {
+  height: 9px;
+  background: #cbd5e1;
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+#barra {
+  height: 100%;
+  width: 0;
+  background: #2563eb;
+  transition: width .2s;
+}
+
+.referencia {
+  color: #475569;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.frase {
+  font-size: 21px;
+  line-height: 1.7;
+  margin: 22px 0;
+}
+
+.hueco {
+  color: #1d4ed8;
+  font-weight: bold;
+  border-bottom: 3px solid #eab308;
+  padding: 0 8px;
+}
+
+.botones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.botones button { flex: 1; }
+
+#mensaje {
+  padding: 13px;
+  border-radius: 10px;
+  line-height: 1.6;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+.correcto { background: #dcfce7; color: #166534; }
+.incorrecto { background: #fee2e2; color: #991b1b; }
+.neutro { background: #dbeafe; color: #1e40af; }
+
+.nota {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+#totalFinal {
+  text-align: center;
+  font-size: 44px;
+  color: #1d4ed8;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 400px) {
+  .panel { padding: 15px; }
+  .frase { font-size: 19px; }
+  header h1 { font-size: 22px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>📖 RETO BÍBLICO</h1>
+  <p>Job 1:1-22</p>
+  <span class="etiqueta">MODO RABINO · 10 DESAFÍOS</span>
+</header>
+
+<main>
+  <section id="inicio" class="panel">
+    <h2>¿Cuánto conoces de Job?</h2>
+    <p>Completa las 10 frases bíblicas escribiendo la palabra o expresión que falta.</p>
+    <ul>
+      <li>10 preguntas de dificultad avanzada.</li>
+      <li>10 puntos por acertar al primer intento.</li>
+      <li>5 puntos por acertar al segundo intento.</li>
+      <li>Pistas y referencias bíblicas.</li>
+    </ul>
+
+    <label for="nombre"><strong>Nombre del participante:</strong></label>
+    <input id="nombre" type="text" maxlength="35"
+      placeholder="Escribe tu nombre"
+      autocomplete="name">
+
+    <button id="btnComenzar" class="primario ancho" type="button">
+      Comenzar juego
+    </button>
+
+    <p class="nota">Las frases son ejercicios de estudio. Consulta tu versión bíblica para verificar la redacción exacta.</p>
+  </section>
+
+  <section id="juego" class="oculto">
+    <div class="estadisticas">
+      <div class="estadistica">
+        <strong id="contador">1/10</strong>
+        <span>Pregunta</span>
+      </div>
+      <div class="estadistica">
+        <strong id="puntos">0</strong>
+        <span>Puntos</span>
+      </div>
+      <div class="estadistica">
+        <strong id="aciertos">0</strong>
+        <span>Aciertos</span>
+      </div>
+    </div>
+
+    <div class="progreso"><div id="barra"></div></div>
+
+    <div class="panel">
+      <p id="referencia" class="referencia"></p>
+      <div id="frase" class="frase"></div>
+
+      <label for="respuesta"><strong>Escribe tu respuesta aquí:</strong></label>
+
+      <input id="respuesta" type="text"
+        placeholder="Toca aquí y escribe"
+        autocomplete="off"
+        autocapitalize="sentences"
+        spellcheck="false">
+
+      <div id="mensaje" class="oculto" aria-live="polite"></div>
+
+      <div class="botones">
+        <button id="btnComprobar" class="primario" type="button">
+          Comprobar
+        </button>
+        <button id="btnPista" class="secundario" type="button">
+          Ver pista
+        </button>
+        <button id="btnSiguiente" class="dorado oculto" type="button">
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <p class="nota">Participante: <strong id="nombreActual"></strong></p>
+  </section>
+
+  <section id="final" class="panel oculto">
+    <h2 style="text-align:center">🏆 Juego terminado</h2>
+    <p id="saludoFinal" style="text-align:center"></p>
+    <div id="totalFinal">0/100</div>
+    <p id="resumen" style="text-align:center"></p>
+    <button id="btnReiniciar" class="primario ancho" type="button">
+      Volver a jugar
+    </button>
+    <p class="nota">La puntuación de esta versión se muestra en el dispositivo donde se juega.</p>
+  </section>
+</main>
+
+<footer>Estudio bíblico · Job 1:1-22</footer>
+
+<script>
+"use strict";
+
 const desafios = [
   {
-    v:"Job 1:1",
-    frase:'En la tierra de Uz vivía un hombre llamado <b>____</b>.',
-    respuestas:["Job"],
-    solucion:"Job",
-    pista:"Es el protagonista del libro."
+    v: "Job 1:1",
+    antes: "En la tierra de Uz vivía un hombre llamado",
+    despues: ".",
+    respuestas: ["job"],
+    solucion: "Job",
+    pista: "Es el protagonista del libro."
   },
   {
-    v:"Job 1:1",
-    frase:'Job era perfecto, recto, temeroso de Dios y apartado del <b>____</b>.',
-    respuestas:["mal"],
-    solucion:"Mal",
-    pista:"Es aquello de lo que Job se apartaba."
+    v: "Job 1:1",
+    antes: "Job era perfecto, recto, temeroso de Dios y apartado del",
+    despues: ".",
+    respuestas: ["mal"],
+    solucion: "Mal",
+    pista: "Lo contrario del bien."
   },
   {
-    v:"Job 1:2",
-    frase:'Job tenía siete hijos y <b>____</b> hijas.',
-    respuestas:["tres"],
-    solucion:"Tres",
-    pista:"Siete más esta cantidad suman diez."
+    v: "Job 1:2",
+    antes: "Job tenía siete hijos y",
+    despues: "hijas.",
+    respuestas: ["tres"],
+    solucion: "Tres",
+    pista: "Siete hijos más esta cantidad de hijas."
   },
   {
-    v:"Job 1:3",
-    frase:'Job poseía siete mil ovejas, tres mil camellos, quinientas yuntas de bueyes y quinientas <b>____</b>.',
-    respuestas:["asnas"],
-    solucion:"Asnas",
-    pista:"Eran animales hembra de la familia del asno."
+    v: "Job 1:3",
+    antes: "Job poseía siete mil ovejas, tres mil camellos, quinientas yuntas de bueyes y quinientas",
+    despues: ".",
+    respuestas: ["asnas"],
+    solucion: "Asnas",
+    pista: "Animales hembra de la familia del asno."
   },
   {
-    v:"Job 1:3",
-    frase:'Job era considerado el hombre más grande de todos los del <b>____</b>.',
-    respuestas:["oriente"],
-    solucion:"Oriente",
-    pista:"La región donde se encontraba su reputación."
+    v: "Job 1:3",
+    antes: "Job era considerado el hombre más grande de todos los del",
+    despues: ".",
+    respuestas: ["oriente"],
+    solucion: "Oriente",
+    pista: "Región geográfica mencionada en el relato."
   },
   {
-    v:"Job 1:5",
-    frase:'Job ofrecía holocaustos por sus hijos, pensando: quizá hayan pecado y <b>____</b> contra Dios en sus corazones.',
-    respuestas:["blasfemado"],
-    solucion:"Blasfemado",
-    pista:"Palabra relacionada con hablar irreverentemente contra Dios."
+    v: "Job 1:5",
+    antes: "Job ofrecía holocaustos por sus hijos, pensando que quizá hubieran pecado y",
+    despues: "contra Dios en sus corazones.",
+    respuestas: ["blasfemado"],
+    solucion: "Blasfemado",
+    pista: "Hablar irreverentemente contra Dios."
   },
   {
-    v:"Job 1:6-7",
-    frase:'Cuando Dios preguntó a Satanás de dónde venía, este respondió que recorría la tierra y andaba por ella de <b>____</b>.',
-    respuestas:["un lado a otro","de un lado a otro"],
-    solucion:"De un lado a otro",
-    pista:"Expresión que describe recorrer toda la tierra."
+    v: "Job 1:7",
+    antes: "Satanás respondió que recorría la tierra y andaba por ella de",
+    despues: ".",
+    respuestas: [
+      "un lado a otro",
+      "de un lado a otro"
+    ],
+    solucion: "De un lado a otro",
+    pista: "Expresión que describe recorrer la tierra."
   },
   {
-    v:"Job 1:9-10",
-    frase:'Satanás cuestionó la motivación de Job, insinuando que temía a Dios porque este había cercado de protección todo lo que tenía a su <b>____</b>.',
-    respuestas:["alrededor"],
-    solucion:"Alrededor",
-    pista:"La protección rodeaba a Job y sus posesiones."
+    v: "Job 1:9-10",
+    antes: "Satanás cuestionó la motivación de Job y mencionó la protección de Dios a su",
+    despues: ".",
+    respuestas: ["alrededor"],
+    solucion: "Alrededor",
+    pista: "La protección rodeaba a Job y sus posesiones."
   },
   {
-    v:"Job 1:12",
-    frase:'Dios permitió que Satanás tocara las posesiones de Job, pero le prohibió extender su mano contra su <b>____</b>.',
-    respuestas:["persona"],
-    solucion:"Persona",
-    pista:"Dios puso un límite para proteger al propio Job."
+    v: "Job 1:12",
+    antes: "Dios permitió que Satanás tocara las posesiones de Job, pero le prohibió extender su mano contra su",
+    despues: ".",
+    respuestas: ["persona"],
+    solucion: "Persona",
+    pista: "Dios protegió al propio Job."
   },
   {
-    v:"Job 1:20-22",
-    frase:'Después de perder sus bienes y sus hijos, Job declaró: Jehová dio y Jehová quitó; sea el nombre de Jehová <b>____</b>.',
-    respuestas:["bendito"],
-    solucion:"Bendito",
-    pista:"Es la palabra con la que Job termina esta declaración de adoración."
+    v: "Job 1:20-22",
+    antes: "Después de sus pérdidas, Job declaró: Jehová dio y Jehová quitó; sea el nombre de Jehová",
+    despues: ".",
+    respuestas: ["bendito"],
+    solucion: "Bendito",
+    pista: "Palabra de alabanza que expresa honra a Dios."
   }
 ];
+
+let indice = 0;
+let puntos = 0;
+let aciertos = 0;
+let intentos = 0;
+let nombreJugador = "";
+let respondido = false;
+
+const $ = id => document.getElementById(id);
+
+function normalizar(texto) {
+  return texto.toLocaleLowerCase("es")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,;:¡!¿?'"“”]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function mostrar(id) {
+  $(id).classList.remove("oculto");
+}
+
+function ocultar(id) {
+  $(id).classList.add("oculto");
+}
+
+function comenzar() {
+  nombreJugador = $("nombre").value.trim();
+
+  if (!nombreJugador) {
+    $("nombre").focus();
+    alert("Escribe tu nombre antes de comenzar.");
+    return;
+  }
+
+  indice = 0;
+  puntos = 0;
+  aciertos = 0;
+  intentos = 0;
+  respondido = false;
+
+  ocultar("inicio");
+  ocultar("final");
+  mostrar("juego");
+
+  $("nombreActual").textContent = nombreJugador;
+  cargarPregunta();
+}
+
+function cargarPregunta() {
+  respondido = false;
+  intentos = 0;
+
+  const q = desafios[indice];
+
+  $("contador").textContent = (indice + 1) + "/10";
+  $("puntos").textContent = puntos;
+  $("aciertos").textContent = aciertos;
+  $("barra").style.width = (indice / 10 * 100) + "%";
+  $("referencia").textContent = "REFERENCIA: " + q.v;
+
+  $("frase").replaceChildren(
+    document.createTextNode(q.antes + " "),
+    Object.assign(document.createElement("span"), {
+      className: "hueco",
+      textContent: "________"
+    }),
+    document.createTextNode(" " + q.despues)
+  );
+
+  $("respuesta").value = "";
+  $("respuesta").disabled = false;
+  $("btnComprobar").disabled = false;
+  $("btnComprobar").textContent = "Comprobar";
+
+  ocultar("mensaje");
+  ocultar("btnSiguiente");
+  mostrar("btnComprobar");
+  mostrar("btnPista");
+
+  // Retraso breve para permitir que el navegador muestre la pregunta.
+  window.setTimeout(() => {
+    if (!$("juego").classList.contains("oculto")) {
+      $("respuesta").focus();
+    }
+  }, 100);
+}
+
+function comprobar() {
+  if (respondido) return;
+
+  const texto = $("respuesta").value;
+
+  if (!texto.trim()) {
+    mostrarMensaje("Escribe una respuesta antes de comprobar.", "neutro");
+    $("respuesta").focus();
+    return;
+  }
+
+  const q = desafios[indice];
+  const respuestaUsuario = normalizar(texto);
+  const correctas = q.respuestas.map(normalizar);
+
+  if (correctas.includes(respuestaUsuario)) {
+    aciertos++;
+    puntos += intentos === 0 ? 10 : 5;
+    respondido = true;
+
+    mostrarMensaje(
+      "¡Correcto! +" + (intentos === 0 ? 10 : 5) +
+      " puntos.<br><strong>Respuesta:</strong> " +
+      q.solucion + "<br><strong>Referencia:</strong> " + q.v,
+      "correcto",
+      true
+    );
+
+    finalizarPregunta();
+  } else {
+    intentos++;
+
+    if (intentos >= 2) {
+      respondido = true;
+
+      mostrarMensaje(
+        "No acertaste.<br><strong>Respuesta esperada:</strong> " +
+        q.solucion + "<br><strong>Referencia:</strong> " + q.v,
+        "incorrecto",
+        true
+      );
+
+      finalizarPregunta();
+    } else {
+      mostrarMensaje(
+        "Respuesta incorrecta. Puedes intentarlo una vez más.",
+        "incorrecto"
+      );
+
+      $("respuesta").focus();
+      $("respuesta").select();
+    }
+  }
+
+  $("puntos").textContent = puntos;
+  $("aciertos").textContent = aciertos;
+}
+
+function mostrarMensaje(texto, clase, seguro = false) {
+  const m = $("mensaje");
+  m.className = clase;
+
+  if (seguro) {
+    m.innerHTML = texto;
+  } else {
+    m.textContent = texto;
+  }
+
+  mostrar("mensaje");
+}
+
+function finalizarPregunta() {
+  $("respuesta").disabled = true;
+  ocultar("btnComprobar");
+  ocultar("btnPista");
+  mostrar("btnSiguiente");
+}
+
+function mostrarPista() {
+  mostrarMensaje("Pista: " + desafios[indice].pista, "neutro");
+}
+
+function siguiente() {
+  indice++;
+
+  if (indice >= desafios.length) {
+    mostrarFinal();
+    return;
+  }
+
+  cargarPregunta();
+}
+
+function mostrarFinal() {
+  ocultar("juego");
+  mostrar("final");
+
+  $("barra").style.width = "100%";
+  $("saludoFinal").textContent = "¡Buen trabajo, " + nombreJugador + "!";
+  $("totalFinal").textContent = puntos + "/100";
+
+  let mensaje = "Sigue estudiando y vuelve a intentarlo.";
+
+  if (puntos >= 90) {
+    mensaje = "¡Excelente! Has demostrado un gran dominio del pasaje.";
+  } else if (puntos >= 70) {
+    mensaje = "¡Muy buen trabajo! Sigue profundizando en la Palabra.";
+  } else if (puntos >= 50) {
+    mensaje = "Buen esfuerzo. Repasa Job 1:1-22 y vuelve a jugar.";
+  }
+
+  $("resumen").textContent =
+    mensaje + " Aciertos: " + aciertos + " de 10.";
+}
+
+function reiniciar() {
+  ocultar("final");
+  mostrar("inicio");
+  $("nombre").value = nombreJugador;
+  $("nombre").focus();
+}
+
+// Eventos explícitos para que los controles funcionen en móvil y computadora.
+$("btnComenzar").addEventListener("click", comenzar);
+$("btnComprobar").addEventListener("click", comprobar);
+$("btnPista").addEventListener("click", mostrarPista);
+$("btnSiguiente").addEventListener("click", siguiente);
+$("btnReiniciar").addEventListener("click", reiniciar);
+
+$("nombre").addEventListener("keydown", function(evento) {
+  if (evento.key === "Enter") comenzar();
+});
+
+$("respuesta").addEventListener("keydown", function(evento) {
+  if (evento.key === "Enter") {
+    evento.preventDefault();
+
+    if (respondido) {
+      siguiente();
+    } else {
+      comprobar();
+    }
+  }
+});
+</script>
+</body>
+  </html>
+  
