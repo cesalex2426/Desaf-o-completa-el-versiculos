@@ -3,621 +3,616 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#172554">
-<title>Reto Bíblico - Job 1:1-22</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafío bíblico: Job</title>
 <style>
+:root {
+  --azul: #173b63;
+  --dorado: #d6a63b;
+  --fondo: #f2f5f9;
+  --verde: #197348;
+  --rojo: #b42318;
+}
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
+  padding: 16px;
   font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  color: #172033;
+  background: var(--fondo);
+  color: #202b38;
 }
-
-header {
-  background: #172554;
+.contenedor { max-width: 720px; margin: auto; }
+.cabecera {
+  background: var(--azul);
   color: white;
   text-align: center;
-  padding: 25px 12px;
-  border-bottom: 5px solid #eab308;
-}
-
-header h1 { margin: 0 0 8px; font-size: 26px; }
-header p { margin: 5px 0; }
-
-.etiqueta {
-  display: inline-block;
-  background: #facc15;
-  color: #422006;
-  padding: 7px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-main {
-  max-width: 650px;
-  margin: 20px auto;
-  padding: 0 12px 25px;
-}
-
-.panel {
-  background: white;
+  padding: 24px 16px;
   border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 15px #0000000d;
+  border-bottom: 6px solid var(--dorado);
 }
-
-h2 { color: #172554; margin-top: 0; }
-
-input[type="text"] {
-  display: block;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  min-height: 52px;
-  margin: 12px 0;
-  padding: 13px;
-  border: 2px solid #94a3b8;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #172033;
-  font-size: 18px;
-  pointer-events: auto;
-  touch-action: manipulation;
-  user-select: text;
-  -webkit-user-select: text;
-}
-
-input[type="text"]:focus {
-  outline: 3px solid #bfdbfe;
-  border-color: #2563eb;
-}
-
-button {
-  display: inline-block;
-  min-height: 46px;
-  padding: 12px 17px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-button:disabled { opacity: .6; }
-
-.primario { background: #2563eb; color: white; }
-.secundario { background: #e2e8f0; color: #172033; }
-.dorado { background: #facc15; color: #422006; }
-
-.ancho { width: 100%; }
-.oculto { display: none !important; }
-
-.estadisticas {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.estadistica {
-  text-align: center;
+.cabecera h1 { margin: 0 0 8px; }
+.tarjeta {
   background: white;
-  padding: 12px 4px;
-  border-radius: 12px;
+  margin-top: 16px;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px #00000010;
 }
-
-.estadistica strong {
+.oculto { display: none !important; }
+input, button {
   display: block;
-  color: #1d4ed8;
-  font-size: 22px;
-}
-
-.estadistica span { font-size: 12px; }
-
-.progreso {
-  height: 9px;
-  background: #cbd5e1;
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
   border-radius: 9px;
-  overflow: hidden;
-  margin-bottom: 15px;
+  font-size: 16px;
 }
-
-#barra {
-  height: 100%;
-  width: 0;
-  background: #2563eb;
-  transition: width .2s;
-}
-
-.referencia {
-  color: #475569;
-  font-size: 14px;
+input { border: 1px solid #b8c3d0; }
+button {
+  border: 0;
+  cursor: pointer;
+  background: var(--azul);
+  color: white;
   font-weight: bold;
 }
-
-.frase {
-  font-size: 21px;
-  line-height: 1.7;
-  margin: 22px 0;
-}
-
-.hueco {
-  color: #1d4ed8;
-  font-weight: bold;
-  border-bottom: 3px solid #eab308;
-  padding: 0 8px;
-}
-
-.botones {
+button:disabled { opacity: .6; cursor: not-allowed; }
+.secundario { background: #e8edf4; color: var(--azul); }
+.fila {
   display: flex;
   gap: 8px;
+  justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 12px;
 }
-
-.botones button { flex: 1; }
-
-#mensaje {
-  padding: 13px;
-  border-radius: 10px;
-  line-height: 1.6;
-  margin-top: 12px;
-  overflow-wrap: anywhere;
-}
-
-.correcto { background: #dcfce7; color: #166534; }
-.incorrecto { background: #fee2e2; color: #991b1b; }
-.neutro { background: #dbeafe; color: #1e40af; }
-
-.nota {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #64748b;
-}
-
-#totalFinal {
-  text-align: center;
-  font-size: 44px;
-  color: #1d4ed8;
+.pastilla {
+  background: #edf1f6;
+  padding: 9px 12px;
+  border-radius: 9px;
   font-weight: bold;
 }
-
-footer {
-  text-align: center;
-  padding: 15px;
-  color: #64748b;
-  font-size: 12px;
+#tiempo { color: var(--verde); }
+#tiempo.urgente { color: var(--rojo); }
+#frase {
+  font-size: 19px;
+  line-height: 1.7;
+  background: #f7f8fa;
+  border-left: 4px solid var(--dorado);
+  padding: 16px;
+  border-radius: 8px;
 }
-
-@media (max-width: 400px) {
-  .panel { padding: 15px; }
-  .frase { font-size: 19px; }
-  header h1 { font-size: 22px; }
+#respuesta { font-size: 18px; }
+#mensaje {
+  margin-top: 14px;
+  padding: 13px;
+  border-radius: 9px;
+  line-height: 1.5;
 }
+#mensaje:empty { display: none; }
+.bien { background: #e0f4e8; }
+.mal { background: #fde8e7; }
+.pequeno { font-size: 13px; color: #5c6878; line-height: 1.5; }
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+th, td {
+  padding: 9px 6px;
+  border-bottom: 1px solid #e0e5ec;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+th { background: #edf1f6; }
+#qr { display: block; width: 220px; max-width: 100%; margin: 12px auto; }
 </style>
 </head>
-
 <body>
-<header>
-  <h1>📖 RETO BÍBLICO</h1>
-  <p>Job 1:1-22</p>
-  <span class="etiqueta">MODO RABINO · 10 DESAFÍOS</span>
-</header>
+<div class="contenedor">
+  <header class="cabecera">
+    <h1>📖 Desafío bíblico</h1>
+    <p>Autocompletación de Job 1:1–22</p>
+    <p>Del nivel medio al modo rabino</p>
+  </header>
 
-<main>
-  <section id="inicio" class="panel">
-    <h2>¿Cuánto conoces de Job?</h2>
-    <p>Completa las 10 frases bíblicas escribiendo la palabra o expresión que falta.</p>
-    <ul>
-      <li>10 preguntas de dificultad avanzada.</li>
-      <li>10 puntos por acertar al primer intento.</li>
-      <li>5 puntos por acertar al segundo intento.</li>
-      <li>Pistas y referencias bíblicas.</li>
-    </ul>
-
-    <label for="nombre"><strong>Nombre del participante:</strong></label>
-    <input id="nombre" type="text" maxlength="35"
-      placeholder="Escribe tu nombre"
-      autocomplete="name">
-
-    <button id="btnComenzar" class="primario ancho" type="button">
-      Comenzar juego
-    </button>
-
-    <p class="nota">Las frases son ejercicios de estudio. Consulta tu versión bíblica para verificar la redacción exacta.</p>
-  </section>
-
-  <section id="juego" class="oculto">
-    <div class="estadisticas">
-      <div class="estadistica">
-        <strong id="contador">1/10</strong>
-        <span>Pregunta</span>
-      </div>
-      <div class="estadistica">
-        <strong id="puntos">0</strong>
-        <span>Puntos</span>
-      </div>
-      <div class="estadistica">
-        <strong id="aciertos">0</strong>
-        <span>Aciertos</span>
-      </div>
+  <section id="inicio" class="tarjeta">
+    <h2>¡Prepárate para el desafío!</h2>
+    <p>Completa las 10 frases bíblicas. Tendrás 40 segundos por pregunta.</p>
+    <label for="equipo"><strong>Nombre del participante o equipo:</strong></label>
+    <input id="equipo" maxlength="40" placeholder="Escribe el nombre aquí">
+    <button id="comenzar">Comenzar juego</button>
+    <button id="verHistorial" class="secundario">Ver ranking e historial</button>
+    <button id="verQR" class="secundario">Mostrar código QR</button>
+    <div id="zonaQR" class="oculto">
+      <p>Escanea el código con la cámara de tu celular:</p>
+      <img id="qr" alt="Código QR del juego">
+      <p id="urlJuego" class="pequeno"></p>
     </div>
+  </section>
 
-    <div class="progreso"><div id="barra"></div></div>
-
-    <div class="panel">
-      <p id="referencia" class="referencia"></p>
-      <div id="frase" class="frase"></div>
-
-      <label for="respuesta"><strong>Escribe tu respuesta aquí:</strong></label>
-
-      <input id="respuesta" type="text"
-        placeholder="Toca aquí y escribe"
-        autocomplete="off"
-        autocapitalize="sentences"
-        spellcheck="false">
-
-      <div id="mensaje" class="oculto" aria-live="polite"></div>
-
-      <div class="botones">
-        <button id="btnComprobar" class="primario" type="button">
-          Comprobar
-        </button>
-        <button id="btnPista" class="secundario" type="button">
-          Ver pista
-        </button>
-        <button id="btnSiguiente" class="dorado oculto" type="button">
-          Siguiente
-        </button>
-      </div>
+  <section id="juego" class="tarjeta oculto">
+    <div class="fila">
+      <span class="pastilla" id="progreso">Pregunta 1 de 10</span>
+      <span class="pastilla">Puntos: <span id="puntos">0</span></span>
+      <span class="pastilla">Tiempo: <span id="tiempo">40</span> s</span>
     </div>
-
-    <p class="nota">Participante: <strong id="nombreActual"></strong></p>
+    <h2 id="nivel"></h2>
+    <p><strong>Completa la frase bíblica:</strong></p>
+    <div id="frase"></div>
+    <form id="formRespuesta">
+      <label for="respuesta"><strong>Tu respuesta:</strong></label>
+      <input id="respuesta" autocomplete="off" placeholder="Escribe la palabra o frase que falta">
+      <button id="botonResponder" type="submit">Responder</button>
+    </form>
+    <div id="mensaje" aria-live="polite"></div>
   </section>
 
-  <section id="final" class="panel oculto">
-    <h2 style="text-align:center">🏆 Juego terminado</h2>
-    <p id="saludoFinal" style="text-align:center"></p>
-    <div id="totalFinal">0/100</div>
-    <p id="resumen" style="text-align:center"></p>
-    <button id="btnReiniciar" class="primario ancho" type="button">
-      Volver a jugar
-    </button>
-    <p class="nota">La puntuación de esta versión se muestra en el dispositivo donde se juega.</p>
+  <section id="final" class="tarjeta oculto">
+    <h2>🏆 ¡Desafío terminado!</h2>
+    <p id="resumen"></p>
+    <h3>Ranking guardado en este dispositivo</h3>
+    <div id="rankingFinal"></div>
+    <button id="repetir">Volver a jugar</button>
+    <button id="descargar" class="secundario">Descargar ranking CSV</button>
+    <button id="volverInicio" class="secundario">Volver al inicio</button>
   </section>
-</main>
 
-<footer>Estudio bíblico · Job 1:1-22</footer>
+  <section id="historial" class="tarjeta oculto">
+    <h2>Ranking e historial</h2>
+    <div id="tablaHistorial"></div>
+    <button id="csvHistorial" class="secundario">Descargar ranking CSV</button>
+    <button id="borrarHistorial" class="secundario">Borrar historial de este dispositivo</button>
+    <button id="cerrarHistorial">Cerrar</button>
+    <p class="pequeno">El historial se guarda en este navegador y no se comparte automáticamente con otros celulares.</p>
+  </section>
+
+  <footer class="tarjeta pequeno">
+    <strong>Reglas:</strong> cada respuesta correcta vale 10 puntos. Las respuestas incorrectas o el tiempo agotado valen 0 puntos. Tras cada respuesta, el juego muestra la corrección y avanza automáticamente después de 3 segundos.
+  </footer>
+</div>
 
 <script>
 "use strict";
 
-const desafios = [
+const DURACION = 40;
+const PUNTOS_ACIERTO = 10;
+const CLAVE_HISTORIAL = "job_autocompletacion_historial_v2";
+
+const preguntas = [
   {
-    v: "Job 1:1",
-    antes: "En la tierra de Uz vivía un hombre llamado",
-    despues: ".",
-    respuestas: ["job"],
-    solucion: "Job",
-    pista: "Es el protagonista del libro."
+    nivel: "Nivel 1 · Medio",
+    antes: "Hubo en tierra de ",
+    despues: " un varón llamado Job; y era este hombre perfecto y recto, temeroso de Dios y apartado del mal.",
+    respuestas: ["uz"],
+    mostrar: "Uz",
+    cita: "Job 1:1"
   },
   {
-    v: "Job 1:1",
-    antes: "Job era perfecto, recto, temeroso de Dios y apartado del",
+    nivel: "Nivel 2 · Medio",
+    antes: "Job era temeroso de Dios y apartado del ",
     despues: ".",
     respuestas: ["mal"],
-    solucion: "Mal",
-    pista: "Lo contrario del bien."
+    mostrar: "mal",
+    cita: "Job 1:1"
   },
   {
-    v: "Job 1:2",
-    antes: "Job tenía siete hijos y",
-    despues: "hijas.",
-    respuestas: ["tres"],
-    solucion: "Tres",
-    pista: "Siete hijos más esta cantidad de hijas."
-  },
-  {
-    v: "Job 1:3",
-    antes: "Job poseía siete mil ovejas, tres mil camellos, quinientas yuntas de bueyes y quinientas",
+    nivel: "Nivel 3 · Intermedio",
+    antes: "Y le nacieron siete hijos y tres ",
     despues: ".",
-    respuestas: ["asnas"],
-    solucion: "Asnas",
-    pista: "Animales hembra de la familia del asno."
+    respuestas: ["hijas"],
+    mostrar: "hijas",
+    cita: "Job 1:2"
   },
   {
-    v: "Job 1:3",
-    antes: "Job era considerado el hombre más grande de todos los del",
+    nivel: "Nivel 4 · Intermedio",
+    antes: "Su hacienda era siete mil ovejas, tres mil camellos, quinientas yuntas de bueyes, quinientas asnas y muchísimos ",
     despues: ".",
-    respuestas: ["oriente"],
-    solucion: "Oriente",
-    pista: "Región geográfica mencionada en el relato."
+    respuestas: ["criados"],
+    mostrar: "criados",
+    cita: "Job 1:3"
   },
   {
-    v: "Job 1:5",
-    antes: "Job ofrecía holocaustos por sus hijos, pensando que quizá hubieran pecado y",
-    despues: "contra Dios en sus corazones.",
+    nivel: "Nivel 5 · Avanzado",
+    antes: "Quizá habrán pecado mis hijos, y habrán ",
+    despues: " contra Dios en sus corazones.",
     respuestas: ["blasfemado"],
-    solucion: "Blasfemado",
-    pista: "Hablar irreverentemente contra Dios."
+    mostrar: "blasfemado",
+    cita: "Job 1:5"
   },
   {
-    v: "Job 1:7",
-    antes: "Satanás respondió que recorría la tierra y andaba por ella de",
+    nivel: "Nivel 6 · Avanzado",
+    antes: "Entre los que se presentaron delante de Jehová también vino ",
     despues: ".",
-    respuestas: [
-      "un lado a otro",
-      "de un lado a otro"
-    ],
-    solucion: "De un lado a otro",
-    pista: "Expresión que describe recorrer la tierra."
+    respuestas: ["satanas"],
+    mostrar: "Satanás",
+    cita: "Job 1:6"
   },
   {
-    v: "Job 1:9-10",
-    antes: "Satanás cuestionó la motivación de Job y mencionó la protección de Dios a su",
-    despues: ".",
-    respuestas: ["alrededor"],
-    solucion: "Alrededor",
-    pista: "La protección rodeaba a Job y sus posesiones."
+    nivel: "Nivel 7 · Difícil",
+    antes: "¿Acaso teme Job a Dios de ",
+    despues: "?",
+    respuestas: ["balde"],
+    mostrar: "balde",
+    cita: "Job 1:9"
   },
   {
-    v: "Job 1:12",
-    antes: "Dios permitió que Satanás tocara las posesiones de Job, pero le prohibió extender su mano contra su",
+    nivel: "Nivel 8 · Muy difícil",
+    antes: "Solamente no pongas tu mano sobre ",
     despues: ".",
-    respuestas: ["persona"],
-    solucion: "Persona",
-    pista: "Dios protegió al propio Job."
+    respuestas: ["el", "job"],
+    mostrar: "él (Job)",
+    cita: "Job 1:12"
   },
   {
-    v: "Job 1:20-22",
-    antes: "Después de sus pérdidas, Job declaró: Jehová dio y Jehová quitó; sea el nombre de Jehová",
+    nivel: "Nivel 9 · Modo rabino",
+    antes: "Fuego de Dios cayó del cielo, que quemó las ovejas y a los ",
     despues: ".",
-    respuestas: ["bendito"],
-    solucion: "Bendito",
-    pista: "Palabra de alabanza que expresa honra a Dios."
+    respuestas: ["criados", "siervos"],
+    mostrar: "criados",
+    cita: "Job 1:16"
+  },
+  {
+    nivel: "Nivel 10 · Modo rabino",
+    antes: "Jehová dio, y Jehová ",
+    despues: "; sea el nombre de Jehová bendito.",
+    respuestas: ["quito"],
+    mostrar: "quitó",
+    cita: "Job 1:21"
   }
 ];
 
 let indice = 0;
 let puntos = 0;
-let aciertos = 0;
-let intentos = 0;
-let nombreJugador = "";
-let respondido = false;
+let nombreEquipo = "";
+let respondida = false;
+let cuentaAtras = DURACION;
+let temporizador = null;
+let avancePendiente = null;
+let registroRonda = [];
+let seccionAnterior = "inicio";
 
 const $ = id => document.getElementById(id);
 
 function normalizar(texto) {
-  return texto.toLocaleLowerCase("es")
+  return String(texto || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[.,;:¡!¿?'"“”]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+    .toLowerCase()
+    .trim()
+    .replace(/[.,;:¡!¿?"'()]/g, "")
+    .replace(/\s+/g, " ");
 }
 
-function mostrar(id) {
-  $(id).classList.remove("oculto");
+function leerHistorial() {
+  try {
+    const datos = JSON.parse(localStorage.getItem(CLAVE_HISTORIAL) || "[]");
+    return Array.isArray(datos) ? datos : [];
+  } catch (error) {
+    return [];
+  }
 }
 
-function ocultar(id) {
-  $(id).classList.add("oculto");
+function guardarHistorial(datos) {
+  try {
+    localStorage.setItem(CLAVE_HISTORIAL, JSON.stringify(datos));
+  } catch (error) {
+    alert("No se pudieron guardar los resultados en este navegador.");
+  }
 }
 
-function comenzar() {
-  nombreJugador = $("nombre").value.trim();
+function mostrarSeccion(id) {
+  ["inicio", "juego", "final", "historial"].forEach(nombre => {
+    $(nombre).classList.toggle("oculto", nombre !== id);
+  });
+}
 
-  if (!nombreJugador) {
-    $("nombre").focus();
-    alert("Escribe tu nombre antes de comenzar.");
+function detenerTemporizador() {
+  if (temporizador !== null) {
+    clearInterval(temporizador);
+    temporizador = null;
+  }
+}
+
+function cancelarAvance() {
+  if (avancePendiente !== null) {
+    clearTimeout(avancePendiente);
+    avancePendiente = null;
+  }
+}
+
+function comenzarJuego() {
+  nombreEquipo = $("equipo").value.trim();
+
+  if (!nombreEquipo) {
+    alert("Escribe el nombre del participante o equipo.");
+    $("equipo").focus();
     return;
   }
 
+  detenerTemporizador();
+  cancelarAvance();
+
   indice = 0;
   puntos = 0;
-  aciertos = 0;
-  intentos = 0;
-  respondido = false;
-
-  ocultar("inicio");
-  ocultar("final");
-  mostrar("juego");
-
-  $("nombreActual").textContent = nombreJugador;
-  cargarPregunta();
+  registroRonda = [];
+  $("puntos").textContent = puntos;
+  mostrarSeccion("juego");
+  mostrarPregunta();
 }
 
-function cargarPregunta() {
-  respondido = false;
-  intentos = 0;
+function mostrarPregunta() {
+  detenerTemporizador();
+  cancelarAvance();
 
-  const q = desafios[indice];
+  if (indice >= preguntas.length) {
+    terminarJuego();
+    return;
+  }
 
-  $("contador").textContent = (indice + 1) + "/10";
-  $("puntos").textContent = puntos;
-  $("aciertos").textContent = aciertos;
-  $("barra").style.width = (indice / 10 * 100) + "%";
-  $("referencia").textContent = "REFERENCIA: " + q.v;
+  respondida = false;
+  cuentaAtras = DURACION;
 
-  $("frase").replaceChildren(
-    document.createTextNode(q.antes + " "),
-    Object.assign(document.createElement("span"), {
-      className: "hueco",
-      textContent: "________"
-    }),
-    document.createTextNode(" " + q.despues)
-  );
+  const p = preguntas[indice];
 
+  $("progreso").textContent = `Pregunta ${indice + 1} de ${preguntas.length}`;
+  $("nivel").textContent = p.nivel;
+  $("frase").textContent = p.antes + " _____ " + p.despues;
   $("respuesta").value = "";
   $("respuesta").disabled = false;
-  $("btnComprobar").disabled = false;
-  $("btnComprobar").textContent = "Comprobar";
+  $("botonResponder").disabled = false;
+  $("mensaje").textContent = "";
+  $("mensaje").className = "";
+  $("tiempo").textContent = cuentaAtras;
+  $("tiempo").classList.remove("urgente");
 
-  ocultar("mensaje");
-  ocultar("btnSiguiente");
-  mostrar("btnComprobar");
-  mostrar("btnPista");
-
-  // Retraso breve para permitir que el navegador muestre la pregunta.
-  window.setTimeout(() => {
-    if (!$("juego").classList.contains("oculto")) {
-      $("respuesta").focus();
-    }
-  }, 100);
+  iniciarTemporizador();
+  $("respuesta").focus();
 }
 
-function comprobar() {
-  if (respondido) return;
+function iniciarTemporizador() {
+  detenerTemporizador();
+  cuentaAtras = DURACION;
+  $("tiempo").textContent = cuentaAtras;
 
-  const texto = $("respuesta").value;
+  temporizador = setInterval(() => {
+    if (respondida) return;
 
-  if (!texto.trim()) {
-    mostrarMensaje("Escribe una respuesta antes de comprobar.", "neutro");
+    cuentaAtras--;
+    $("tiempo").textContent = cuentaAtras;
+
+    if (cuentaAtras <= 10) {
+      $("tiempo").classList.add("urgente");
+    }
+
+    if (cuentaAtras <= 0) {
+      detenerTemporizador();
+      responder(true);
+    }
+  }, 1000);
+}
+
+function enviarRespuesta(evento) {
+  evento.preventDefault();
+  responder(false);
+}
+
+function responder(esTiempoAgotado) {
+  if (respondida) return;
+
+  const p = preguntas[indice];
+  const escrita = esTiempoAgotado ? "" : $("respuesta").value;
+  const respuestaNormalizada = normalizar(escrita);
+
+  if (!esTiempoAgotado && !respuestaNormalizada) {
+    $("mensaje").textContent = "Escribe tu respuesta antes de enviarla.";
+    $("mensaje").className = "mal";
     $("respuesta").focus();
     return;
   }
 
-  const q = desafios[indice];
-  const respuestaUsuario = normalizar(texto);
-  const correctas = q.respuestas.map(normalizar);
+  respondida = true;
+  detenerTemporizador();
+  cancelarAvance();
 
-  if (correctas.includes(respuestaUsuario)) {
-    aciertos++;
-    puntos += intentos === 0 ? 10 : 5;
-    respondido = true;
+  const correcta = !esTiempoAgotado &&
+    p.respuestas.some(r => normalizar(r) === respuestaNormalizada);
 
-    mostrarMensaje(
-      "¡Correcto! +" + (intentos === 0 ? 10 : 5) +
-      " puntos.<br><strong>Respuesta:</strong> " +
-      q.solucion + "<br><strong>Referencia:</strong> " + q.v,
-      "correcto",
-      true
-    );
-
-    finalizarPregunta();
-  } else {
-    intentos++;
-
-    if (intentos >= 2) {
-      respondido = true;
-
-      mostrarMensaje(
-        "No acertaste.<br><strong>Respuesta esperada:</strong> " +
-        q.solucion + "<br><strong>Referencia:</strong> " + q.v,
-        "incorrecto",
-        true
-      );
-
-      finalizarPregunta();
-    } else {
-      mostrarMensaje(
-        "Respuesta incorrecta. Puedes intentarlo una vez más.",
-        "incorrecto"
-      );
-
-      $("respuesta").focus();
-      $("respuesta").select();
-    }
-  }
-
+  if (correcta) puntos += PUNTOS_ACIERTO;
   $("puntos").textContent = puntos;
-  $("aciertos").textContent = aciertos;
-}
 
-function mostrarMensaje(texto, clase, seguro = false) {
-  const m = $("mensaje");
-  m.className = clase;
+  $("respuesta").disabled = true;
+  $("botonResponder").disabled = true;
 
-  if (seguro) {
-    m.innerHTML = texto;
+  const mensaje = $("mensaje");
+  mensaje.className = correcta ? "bien" : "mal";
+
+  let encabezado;
+  if (esTiempoAgotado) {
+    encabezado = "⏰ ¡Se acabó el tiempo!";
+  } else if (correcta) {
+    encabezado = "✅ ¡Respuesta correcta!";
   } else {
-    m.textContent = texto;
+    encabezado = "❌ Respuesta incorrecta.";
   }
 
-  mostrar("mensaje");
+  mensaje.textContent =
+    encabezado +
+    " Respuesta correcta: " + p.mostrar +
+    ". Cita bíblica: " + p.cita +
+    ". Siguiente pregunta en 3 segundos…";
+
+  registroRonda.push({
+    pregunta: p.cita,
+    respuestaEscrita: esTiempoAgotado ? "Tiempo agotado" : escrita,
+    respuestaCorrecta: p.mostrar,
+    acierto: correcta
+  });
+
+  avancePendiente = setTimeout(() => {
+    avancePendiente = null;
+    indice++;
+
+    if (indice < preguntas.length) {
+      mostrarPregunta();
+    } else {
+      terminarJuego();
+    }
+  }, 3000);
 }
 
-function finalizarPregunta() {
-  $("respuesta").disabled = true;
-  ocultar("btnComprobar");
-  ocultar("btnPista");
-  mostrar("btnSiguiente");
+function terminarJuego() {
+  detenerTemporizador();
+  cancelarAvance();
+
+  const aciertos = registroRonda.filter(r => r.acierto).length;
+  const resultado = {
+    nombre: nombreEquipo,
+    puntos: puntos,
+    aciertos: aciertos,
+    total: preguntas.length,
+    fecha: new Date().toLocaleString("es-EC")
+  };
+
+  const historial = leerHistorial();
+  historial.push(resultado);
+  guardarHistorial(historial);
+
+  $("resumen").textContent =
+    `${nombreEquipo}: ${puntos} de ${preguntas.length * PUNTOS_ACIERTO} puntos. ` +
+    `Respuestas correctas: ${aciertos} de ${preguntas.length}.`;
+
+  mostrarRankingFinal();
+  mostrarSeccion("final");
 }
 
-function mostrarPista() {
-  mostrarMensaje("Pista: " + desafios[indice].pista, "neutro");
+function ordenarRanking(datos) {
+  return [...datos].sort((a, b) => b.puntos - a.puntos);
 }
 
-function siguiente() {
-  indice++;
+function crearTabla(datos) {
+  const tabla = document.createElement("table");
+  const thead = document.createElement("thead");
+  const filaCabecera = document.createElement("tr");
 
-  if (indice >= desafios.length) {
-    mostrarFinal();
+  ["Lugar", "Equipo", "Puntos", "Aciertos", "Fecha"].forEach(texto => {
+    const th = document.createElement("th");
+    th.textContent = texto;
+    filaCabecera.appendChild(th);
+  });
+
+  thead.appendChild(filaCabecera);
+  tabla.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  ordenarRanking(datos).forEach((r, i) => {
+    const fila = document.createElement("tr");
+
+    [i + 1, r.nombre, r.puntos, `${r.aciertos}/${r.total}`, r.fecha].forEach(valor => {
+      const td = document.createElement("td");
+      td.textContent = valor;
+      fila.appendChild(td);
+    });
+
+    tbody.appendChild(fila);
+  });
+
+  tabla.appendChild(tbody);
+  return tabla;
+}
+
+function mostrarRankingFinal() {
+  const zona = $("rankingFinal");
+  zona.replaceChildren();
+  const datos = leerHistorial();
+
+  if (!datos.length) {
+    zona.textContent = "Todavía no hay resultados.";
     return;
   }
 
-  cargarPregunta();
+  zona.appendChild(crearTabla(datos));
 }
 
-function mostrarFinal() {
-  ocultar("juego");
-  mostrar("final");
+function abrirHistorial() {
+  seccionAnterior = $("final").classList.contains("oculto") ? "inicio" : "final";
 
-  $("barra").style.width = "100%";
-  $("saludoFinal").textContent = "¡Buen trabajo, " + nombreJugador + "!";
-  $("totalFinal").textContent = puntos + "/100";
+  const zona = $("tablaHistorial");
+  zona.replaceChildren();
+  const datos = leerHistorial();
 
-  let mensaje = "Sigue estudiando y vuelve a intentarlo.";
-
-  if (puntos >= 90) {
-    mensaje = "¡Excelente! Has demostrado un gran dominio del pasaje.";
-  } else if (puntos >= 70) {
-    mensaje = "¡Muy buen trabajo! Sigue profundizando en la Palabra.";
-  } else if (puntos >= 50) {
-    mensaje = "Buen esfuerzo. Repasa Job 1:1-22 y vuelve a jugar.";
+  if (!datos.length) {
+    zona.textContent = "Todavía no hay resultados guardados.";
+  } else {
+    zona.appendChild(crearTabla(datos));
   }
 
-  $("resumen").textContent =
-    mensaje + " Aciertos: " + aciertos + " de 10.";
+  mostrarSeccion("historial");
 }
 
-function reiniciar() {
-  ocultar("final");
-  mostrar("inicio");
-  $("nombre").value = nombreJugador;
-  $("nombre").focus();
+function cerrarHistorial() {
+  mostrarSeccion(seccionAnterior);
 }
 
-// Eventos explícitos para que los controles funcionen en móvil y computadora.
-$("btnComenzar").addEventListener("click", comenzar);
-$("btnComprobar").addEventListener("click", comprobar);
-$("btnPista").addEventListener("click", mostrarPista);
-$("btnSiguiente").addEventListener("click", siguiente);
-$("btnReiniciar").addEventListener("click", reiniciar);
+function descargarCSV() {
+  const datos = ordenarRanking(leerHistorial());
 
-$("nombre").addEventListener("keydown", function(evento) {
-  if (evento.key === "Enter") comenzar();
-});
-
-$("respuesta").addEventListener("keydown", function(evento) {
-  if (evento.key === "Enter") {
-    evento.preventDefault();
-
-    if (respondido) {
-      siguiente();
-    } else {
-      comprobar();
-    }
+  if (!datos.length) {
+    alert("Todavía no hay resultados guardados.");
+    return;
   }
+
+  const filas = [
+    ["Lugar", "Participante/equipo", "Puntos", "Aciertos", "Total", "Fecha"],
+    ...datos.map((r, i) => [i + 1, r.nombre, r.puntos, r.aciertos, r.total, r.fecha])
+  ];
+
+  const csv = filas.map(fila =>
+    fila.map(valor => `"${String(valor ?? "").replace(/"/g, '""')}"`).join(",")
+  ).join("\r\n");
+
+  const archivo = new Blob(["\uFEFF" + csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const enlace = document.createElement("a");
+  const url = URL.createObjectURL(archivo);
+  enlace.href = url;
+  enlace.download = "ranking-desafio-job.csv";
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function mostrarQR() {
+  const url = location.href.split("#")[0];
+  $("urlJuego").textContent = url;
+  $("qr").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" +
+    encodeURIComponent(url);
+  $("zonaQR").classList.toggle("oculto");
+}
+
+function borrarHistorial() {
+  if (!confirm("¿Seguro que deseas borrar todos los resultados de este dispositivo?")) {
+    return;
+  }
+
+  localStorage.removeItem(CLAVE_HISTORIAL);
+  $("tablaHistorial").textContent = "Historial borrado.";
+}
+
+$("comenzar").addEventListener("click", comenzarJuego);
+$("formRespuesta").addEventListener("submit", enviarRespuesta);
+$("equipo").addEventListener("keydown", evento => {
+  if (evento.key === "Enter") comenzarJuego();
 });
+$("repetir").addEventListener("click", () => {
+  $("equipo").value = nombreEquipo;
+  comenzarJuego();
+});
+$("volverInicio").addEventListener("click", () => mostrarSeccion("inicio"));
+$("verHistorial").addEventListener("click", abrirHistorial);
+$("cerrarHistorial").addEventListener("click", cerrarHistorial);
+$("descargar").addEventListener("click", descargarCSV);
+$("csvHistorial").addEventListener("click", descargarCSV);
+$("borrarHistorial").addEventListener("click", borrarHistorial);
+$("verQR").addEventListener("click", mostrarQR);
 </script>
 </body>
   </html>
