@@ -51,8 +51,27 @@ function showQ(){stop();stopNext();if(idx>=preguntas.length){finish();return}con
 function answer(timeout){if(contestada)return;const p=preguntas[idx],written=timeout?"":$("respuesta").value,n=norm(written);if(!timeout&&!n){$("mensaje").textContent="Escribe tu respuesta antes de enviarla.";$("mensaje").className="mal";return}contestada=true;stop();stopNext();const ok=!timeout&&p.respuestas.some(x=>norm(x)===n);if(ok)pts+=10;$("puntos").textContent=pts;$("respuesta").disabled=true;$("responder").disabled=true;$("mensaje").className=ok?"bien":"mal";$("mensaje").textContent=(timeout?"⏰ ¡Se acabó el tiempo!":ok?"✅ ¡Respuesta correcta!":"❌ Respuesta incorrecta.")+" Respuesta correcta: "+p.mostrar+". Cita bíblica: "+p.cita+". Siguiente pregunta en 3 segundos…";beep(ok?"ok":"error");log.push({pregunta:p.cita,respuestaEscrita:timeout?"Tiempo agotado":written,respuestaCorrecta:p.mostrar,acierto:ok});next=setTimeout(()=>{next=null;idx++;if(idx<preguntas.length)showQ();else finish()},3000)}
 async function finish(){stop();stopNext();const aciertos=log.filter(x=>x.acierto).length,r={nombre,puntos:pts,aciertos,total:preguntas.length,fechaISO:new Date().toISOString(),fecha:new Date().toLocaleString("es-EC")};$("resumen").textContent=`${nombre}: ${pts} de 100 puntos. Respuestas correctas: ${aciertos} de 10.`;$("guardado").textContent="Guardando resultado…";section("final");beep("win");if(fb&&user){try{await db.ref(RUTA).push({...r,uid:user.uid,creadoEn:firebase.database.ServerValue.TIMESTAMP});$("guardado").textContent="✅ Resultado guardado en el ranking compartido."}catch(e){console.error(e);$("guardado").textContent="No se pudo guardar. Revisa las reglas de Realtime Database."}}else{$("guardado").textContent="Ranking compartido desconectado. Comprueba Firebase."}await loadFinal()}
 function sortRows(a){return [...a].sort((x,y)=>(Number(y.puntos)||0)-(Number(x.puntos)||0)||(Number(y.aciertos)||0)-(Number(x.aciertos)||0)||(Number(y.creadoEn)||Date.parse(y.fechaISO)||0)-(Number(x.creadoEn)||Date.parse(x.fechaISO)||0))}
-async function getRows(){if(!fb||!db)throw Error("Firebase no conectado");const s=await db.ref(RUTA).limitToLast(500).once("value"),a=[];s.forEach(c=>a.push({...c.val(),id:c.key}));return a}
-function table(rows){const t=document.createElement("table"),h=document.createElement("tr");["Lugar","Equipo","Puntos","Aciertos","Fecha"].forEach(x=>{const e=document.createElement("th");e.textContent=x;h.appendChild(e)});const head=document.createElement("thead");head.appendChild(h);t.appendChild(head);const b=document.createElement("tbody");sortRows(rows).forEach((r,i)=>{const tr=document.createElement("tr");[i+1,r.nombre||"Sin nombre",r.puntos??0,`${r.aciertos??0}/${r.total??10}`,r.fecha||new Date(r.fechaISO||Date.now()).toLocaleString("es-EC")].forEach(x=>{const td=document.createElement("td");td.textContent=String(x);tr.appendChild(td)});b.appendChild(tr)});t.appendChild(b);return t}
+
+async function getRows() {
+  if (!fb || !db) {
+    throw new Error("Firebase no conectado");
+  }
+
+  const snapshot = await db.ref(RUTA).once("value");
+  const resultados = [];
+
+  snapshot.forEach((child) => {
+    const dato = child.val();
+    if (dato && typeof dato === "object") {
+      resultados.push({ ...dato, id: child.key });
+    }
+  });
+
+  console.log("Resultados leídos de Firebase:", resultados.length);
+  return resultados;
+}
+ 
+function table (rows){const t=document.createElement("table"),h=document.createElement("tr");["Lugar","Equipo","Puntos","Aciertos","Fecha"].forEach(x=>{const e=document.createElement("th");e.textContent=x;h.appendChild(e)});const head=document.createElement("thead");head.appendChild(h);t.appendChild(head);const b=document.createElement("tbody");sortRows(rows).forEach((r,i)=>{const tr=document.createElement("tr");[i+1,r.nombre||"Sin nombre",r.puntos??0,`${r.aciertos??0}/${r.total??10}`,r.fecha||new Date(r.fechaISO||Date.now()).toLocaleString("es-EC")].forEach(x=>{const td=document.createElement("td");td.textContent=String(x);tr.appendChild(td)});b.appendChild(tr)});t.appendChild(b);return t}
 function podium(rows,target){const z=$(target);z.replaceChildren();const a=sortRows(rows).slice(0,3);if(!a.length){z.textContent="Todavía no hay resultados compartidos.";return}const wrap=document.createElement("div");wrap.className="podio";[a[1],a[0],a[2]].forEach((r,i)=>{if(!r)return;const d=document.createElement("div");d.className="puesto "+["plata","oro","bronce"][i];d.textContent=["🥈 ","🥇 ","🥉 "][i]+(r.nombre||"Equipo")+" — "+(r.puntos||0)+" pts";wrap.appendChild(d)});z.appendChild(wrap)}
 async function loadFinal(){try{const rows=await getRows();podium(rows,"podio");$("ranking").replaceChildren(table(rows))}catch(e){console.error(e);$("podio").textContent="No se pudo cargar el podio.";$("ranking").textContent="Comprueba la conexión y las reglas de Firebase."}}
 async function history(){prev=$("final").classList.contains("oculto")?"inicio":"final";section("historial");$("tabla").textContent="Cargando…";try{$("tabla").replaceChildren(table(await getRows()))}catch(e){$("tabla").textContent="No se pudo cargar el ranking. Comprueba Firebase y las reglas."}}
