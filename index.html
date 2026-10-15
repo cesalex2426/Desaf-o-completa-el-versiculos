@@ -13,18 +13,10 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 "use strict";
-const firebaseConfig={
- apiKey:"AIzaSyCYhOo_eh9cUfu7oD2t8XeT9q_CZ7ZKCR4",
- authDomain:"desafio-completa-versiculos.firebaseapp.com",
- databaseURL:"https://desafio-completa-versiculos-default-rtdb.firebaseio.com",
- projectId:"desafio-completa-versiculos",
- storageBucket:"desafio-completa-versiculos.firebasestorage.app",
- messagingSenderId:"902225727926",
- appId:"1:902225727926:web:646545b552e20493e2f117"
-};
-const DURACION=40,RUTA="r
- 
-const bancoPreguntas = [
+const firebaseConfig={apiKey:"AIzaSyCYhOo_eh9cUfu7oD2t8XeT9q_CZ7ZKCR4",authDomain:"desafio-completa-versiculos.firebaseapp.com",databaseURL:"https://desafio-completa-versiculos-default-rtdb.firebaseio.com",projectId:"desafio-completa-versiculos",storageBucket:"desafio-completa-versiculos.firebasestorage.app",messagingSenderId:"902225727926",appId:"1:902225727926:web:646545b552e20493e2f117"};
+const DURACION=40,RUTA="resultados_job";
+let preguntas=[];
+const bancoPreguntas=[
 {nivel:"Medio",antes:"Hubo en tierra de ",despues:" un varón llamado Job.",respuestas:["uz"],mostrar:"Uz",cita:"Job 1:1"},
 {nivel:"Medio",antes:"Job era perfecto y ",despues:", temeroso de Dios.",respuestas:["recto"],mostrar:"recto",cita:"Job 1:1"},
 {nivel:"Medio",antes:"Job estaba apartado del ",despues:".",respuestas:["mal"],mostrar:"mal",cita:"Job 1:1"},
@@ -35,7 +27,7 @@ const bancoPreguntas = [
 {nivel:"Medio",antes:"Job tenía quinientas ",despues:".",respuestas:["asnas"],mostrar:"asnas",cita:"Job 1:3"},
 {nivel:"Medio",antes:"Job tenía muchísimos ",despues:".",respuestas:["criados"],mostrar:"criados",cita:"Job 1:3"},
 {nivel:"Medio",antes:"Los hijos de Job hacían banquetes en sus ",despues:".",respuestas:["casas"],mostrar:"casas",cita:"Job 1:4"},
-{nivel:"Intermedio",antes:"Job enviaba a llamar a sus tres ",despues:".",respuestas:["hermanas"],mostrar:"hermanas",cita:"Job 1:4"},
+{nivel:"Intermedio",antes:"Job enviaba a llamar a sus tres ",despues:".",respuestas:["hermanos"],mostrar:"hermanos",cita:"Job 1:4"},
 {nivel:"Intermedio",antes:"Job enviaba a sus hijos y los ",despues:".",respuestas:["santificaba"],mostrar:"santificaba",cita:"Job 1:5"},
 {nivel:"Intermedio",antes:"Job ofrecía ",despues:" conforme al número de todos ellos.",respuestas:["holocaustos"],mostrar:"holocaustos",cita:"Job 1:5"},
 {nivel:"Intermedio",antes:"Quizá mis hijos habrán ",despues:" contra Dios en sus corazones.",respuestas:["blasfemado"],mostrar:"blasfemado",cita:"Job 1:5"},
@@ -45,7 +37,7 @@ const bancoPreguntas = [
 {nivel:"Intermedio",antes:"Satanás dijo que venía de rodear la tierra y de ",despues:" por ella.",respuestas:["andar"],mostrar:"andar",cita:"Job 1:7"},
 {nivel:"Avanzado",antes:"No había otro como Job en la tierra: era perfecto y ",despues:".",respuestas:["recto"],mostrar:"recto",cita:"Job 1:8"},
 {nivel:"Avanzado",antes:"¿Acaso teme Job a Dios de ",despues:"?",respuestas:["balde"],mostrar:"balde",cita:"Job 1:9"},
-{nivel:"Avanzado",antes:"Dios había cercado a Job, su casa y todo lo que ",despues:".",respuestas:["tenia","tiene"],mostrar:"tenía",cita:"Job 1:10"},
+{nivel:"Avanzado",antes:"Dios había cercado a Job, su casa y todo lo que ",despues:".",respuestas:["tenia"],mostrar:"tenía",cita:"Job 1:10"},
 {nivel:"Avanzado",antes:"Al trabajo de sus manos has dado ",despues:".",respuestas:["bendicion"],mostrar:"bendición",cita:"Job 1:10"},
 {nivel:"Avanzado",antes:"Extiende tu mano y toca todo lo que ",despues:".",respuestas:["tiene"],mostrar:"tiene",cita:"Job 1:11"},
 {nivel:"Avanzado",antes:"Todo lo que tiene está en tu ",despues:".",respuestas:["mano"],mostrar:"mano",cita:"Job 1:12"},
@@ -60,49 +52,39 @@ const bancoPreguntas = [
 {nivel:"Modo rabino",antes:"Jehová dio, y Jehová ",despues:".",respuestas:["quito"],mostrar:"quitó",cita:"Job 1:21"},
 {nivel:"Modo rabino",antes:"En todo esto no pecó Job ni atribuyó a Dios ",despues:" alguna.",respuestas:["desproposito"],mostrar:"despropósito",cita:"Job 1:22"}
 ];
- 
 const $=id=>document.getElementById(id);
 let db=null,user=null,fb=false,idx=0,pts=0,nombre="",contestada=false,seg=DURACION,timer=null,next=null,log=[],prev="inicio",audio=null,sonidoOn=true;
 try{sonidoOn=localStorage.getItem("job_sonido")!=="0"}catch(e){}
-function actualizarBoton(){$("sonido").textContent=sonidoOn?"🔊 Sonidos activados":"🔇 Sonidos silenciados"}
-actualizarBoton();
+function actualizarBoton(){$("sonido").textContent=sonidoOn?"🔊 Sonidos activados":"🔇 Sonidos silenciados"}actualizarBoton();
 function beep(tipo){if(!sonidoOn)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!audio)audio=new AC();if(audio.state==="suspended")audio.resume();const ns=tipo==="ok"?[660,880]:tipo==="error"?[220,165]:[523,659,784,1046],t=audio.currentTime;ns.forEach((f,i)=>{const o=audio.createOscillator(),g=audio.createGain(),s=t+i*(tipo==="win"?.16:.12),d=tipo==="win"?.22:.16;o.frequency.value=f;o.type=tipo==="error"?"triangle":"sine";g.gain.setValueAtTime(.001,s);g.gain.exponentialRampToValueAtTime(.15,s+.025);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(audio.destination);o.start(s);o.stop(s+d+.02)})}catch(e){}}
 $("sonido").onclick=()=>{sonidoOn=!sonidoOn;try{localStorage.setItem("job_sonido",sonidoOn?"1":"0")}catch(e){}actualizarBoton();if(sonidoOn)beep("ok")};
 function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[.,;:¡!¿?"'()]/g,"").replace(/\s+/g," ")}
 function section(id){["inicio","juego","final","historial"].forEach(x=>$(x).classList.toggle("oculto",x!==id))}
 function stop(){if(timer){clearInterval(timer);timer=null}}function stopNext(){if(next){clearTimeout(next);next=null}}
-function startFirebase(){try{if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);db=firebase.database();firebase.auth().signInAnonymously().then(c=>{user=c.user;fb=true;$("estado").textContent="Conectado al ranking compartido."}).catch(e=>{$("estado").textContent="No se pudo iniciar sesión anónima. Revisa Firebase Authentication y la conexión.";console.error("Firebase Auth:",e)})}catch(e){$("estado").textContent="Error en la configuración de Firebase. Revisa firebaseConfig.";console.error(e)}}
-function begin(){nombre=$("equipo").value.trim();if(!nombre){alert("Escribe el nombre del participante o equipo.");$("equipo").focus();return}if(!fb){alert("El juego todavía no está conectado a Firebase. Espera unos segundos y revisa el mensaje de conexión.");return}stop();stopNext();idx=0;pts=0;log=[];$("puntos").textContent=pts;section("juego");showQ()}
+function startFirebase(){
+ if(!window.firebase){$("estado").textContent="No se cargó Firebase. Revisa la conexión a internet. Puedes jugar, pero el ranking no estará disponible.";return}
+ try{if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);db=firebase.database();$("estado").textContent="Conectando con Firebase…";
+ firebase.auth().signInAnonymously().then(c=>{user=c.user;fb=true;$("estado").textContent="Conectado al ranking compartido."})
+ .catch(e=>{$("estado").textContent="No se pudo conectar al ranking. Puedes jugar, pero quizá no se guarde el resultado. Revisa Firebase Authentication.";console.error("Firebase Auth:",e)})}
+ catch(e){$("estado").textContent="Error al iniciar Firebase. Puedes jugar, pero el ranking compartido no estará disponible.";console.error(e)}
+}
+function begin(){nombre=$("equipo").value.trim();if(!nombre){alert("Escribe el nombre del participante o equipo.");$("equipo").focus();return}
+ stop();stopNext();idx=0;pts=0;log=[];preguntas=[...bancoPreguntas].sort(()=>Math.random()-.5).slice(0,10);$("puntos").textContent=pts;section("juego");showQ()}
 function showQ(){stop();stopNext();if(idx>=preguntas.length){finish();return}contestada=false;seg=DURACION;const p=preguntas[idx];$("progreso").textContent=`Pregunta ${idx+1} de ${preguntas.length}`;$("nivel").textContent=p.nivel;$("frase").textContent=p.antes+" _____ "+p.despues;$("respuesta").value="";$("respuesta").disabled=false;$("responder").disabled=false;$("mensaje").textContent="";$("mensaje").className="";$("tiempo").textContent=seg;$("tiempo").classList.remove("urgente");timer=setInterval(()=>{if(contestada)return;seg--;$("tiempo").textContent=seg;if(seg<=10)$("tiempo").classList.add("urgente");if(seg<=0){stop();answer(true)}},1000);$("respuesta").focus()}
 function answer(timeout){if(contestada)return;const p=preguntas[idx],written=timeout?"":$("respuesta").value,n=norm(written);if(!timeout&&!n){$("mensaje").textContent="Escribe tu respuesta antes de enviarla.";$("mensaje").className="mal";return}contestada=true;stop();stopNext();const ok=!timeout&&p.respuestas.some(x=>norm(x)===n);if(ok)pts+=10;$("puntos").textContent=pts;$("respuesta").disabled=true;$("responder").disabled=true;$("mensaje").className=ok?"bien":"mal";$("mensaje").textContent=(timeout?"⏰ ¡Se acabó el tiempo!":ok?"✅ ¡Respuesta correcta!":"❌ Respuesta incorrecta.")+" Respuesta correcta: "+p.mostrar+". Cita bíblica: "+p.cita+". Siguiente pregunta en 3 segundos…";beep(ok?"ok":"error");log.push({pregunta:p.cita,respuestaEscrita:timeout?"Tiempo agotado":written,respuestaCorrecta:p.mostrar,acierto:ok});next=setTimeout(()=>{next=null;idx++;if(idx<preguntas.length)showQ();else finish()},3000)}
-async function finish(){stop();stopNext();const aciertos=log.filter(x=>x.acierto).length,r={nombre,puntos:pts,aciertos,total:preguntas.length,fechaISO:new Date().toISOString(),fecha:new Date().toLocaleString("es-EC")};$("resumen").textContent=`${nombre}: ${pts} de 100 puntos. Respuestas correctas: ${aciertos} de 10.`;$("guardado").textContent="Guardando resultado…";section("final");beep("win");if(fb&&user){try{await db.ref(RUTA).push({...r,uid:user.uid,creadoEn:firebase.database.ServerValue.TIMESTAMP});$("guardado").textContent="✅ Resultado guardado en el ranking compartido."}catch(e){console.error(e);$("guardado").textContent="No se pudo guardar. Revisa las reglas de Realtime Database."}}else{$("guardado").textContent="Ranking compartido desconectado. Comprueba Firebase."}await loadFinal()}
+async function finish(){stop();stopNext();const aciertos=log.filter(x=>x.acierto).length,r={nombre,puntos:pts,aciertos,total:preguntas.length,fechaISO:new Date().toISOString(),fecha:new Date().toLocaleString("es-EC")};$("resumen").textContent=`${nombre}: ${pts} de 100 puntos. Respuestas correctas: ${aciertos} de 10.`;$("guardado").textContent="Guardando resultado…";section("final");beep("win");
+ if(fb&&user&&db){try{await db.ref(RUTA).push({...r,uid:user.uid,creadoEn:firebase.database.ServerValue.TIMESTAMP});$("guardado").textContent="✅ Resultado guardado en el ranking compartido."}catch(e){console.error(e);$("guardado").textContent="No se pudo guardar. Revisa las reglas de Realtime Database."}}
+ else $("guardado").textContent="⚠️ Firebase no está conectado: esta partida no se guardó en el ranking compartido.";
+ await loadFinal()}
 function sortRows(a){return [...a].sort((x,y)=>(Number(y.puntos)||0)-(Number(x.puntos)||0)||(Number(y.aciertos)||0)-(Number(x.aciertos)||0)||(Number(y.creadoEn)||Date.parse(y.fechaISO)||0)-(Number(x.creadoEn)||Date.parse(x.fechaISO)||0))}
-
-async function getRows() {
-  if (!fb || !db) {
-    throw new Error("Firebase no conectado");
-  }
-
-  const snapshot = await db.ref(RUTA).once("value");
-  const resultados = [];
-
-  snapshot.forEach((child) => {
-    const dato = child.val();
-    if (dato && typeof dato === "object") {
-      resultados.push({ ...dato, id: child.key });
-    }
-  });
-
-  console.log("Resultados leídos de Firebase:", resultados.length);
-  return resultados;
-}
- 
-function table (rows){const t=document.createElement("table"),h=document.createElement("tr");["Lugar","Equipo","Puntos","Aciertos","Fecha"].forEach(x=>{const e=document.createElement("th");e.textContent=x;h.appendChild(e)});const head=document.createElement("thead");head.appendChild(h);t.appendChild(head);const b=document.createElement("tbody");sortRows(rows).forEach((r,i)=>{const tr=document.createElement("tr");[i+1,r.nombre||"Sin nombre",r.puntos??0,`${r.aciertos??0}/${r.total??10}`,r.fecha||new Date(r.fechaISO||Date.now()).toLocaleString("es-EC")].forEach(x=>{const td=document.createElement("td");td.textContent=String(x);tr.appendChild(td)});b.appendChild(tr)});t.appendChild(b);return t}
+async function getRows(){if(!fb||!db)throw new Error("Firebase no conectado");const snapshot=await db.ref(RUTA).once("value"),resultados=[];snapshot.forEach(child=>{const dato=child.val();if(dato&&typeof dato==="object")resultados.push({...dato,id:child.key})});return resultados}
+function table(rows){const t=document.createElement("table"),h=document.createElement("tr");["Lugar","Equipo","Puntos","Aciertos","Fecha"].forEach(x=>{const e=document.createElement("th");e.textContent=x;h.appendChild(e)});const head=document.createElement("thead");head.appendChild(h);t.appendChild(head);const b=document.createElement("tbody");sortRows(rows).forEach((r,i)=>{const tr=document.createElement("tr");[i+1,r.nombre||"Sin nombre",r.puntos??0,`${r.aciertos??0}/${r.total??10}`,r.fecha||new Date(r.fechaISO||Date.now()).toLocaleString("es-EC")].forEach(x=>{const td=document.createElement("td");td.textContent=String(x);tr.appendChild(td)});b.appendChild(tr)});t.appendChild(b);return t}
 function podium(rows,target){const z=$(target);z.replaceChildren();const a=sortRows(rows).slice(0,3);if(!a.length){z.textContent="Todavía no hay resultados compartidos.";return}const wrap=document.createElement("div");wrap.className="podio";[a[1],a[0],a[2]].forEach((r,i)=>{if(!r)return;const d=document.createElement("div");d.className="puesto "+["plata","oro","bronce"][i];d.textContent=["🥈 ","🥇 ","🥉 "][i]+(r.nombre||"Equipo")+" — "+(r.puntos||0)+" pts";wrap.appendChild(d)});z.appendChild(wrap)}
-async function loadFinal(){try{const rows=await getRows();podium(rows,"podio");$("ranking").replaceChildren(table(rows))}catch(e){console.error(e);$("podio").textContent="No se pudo cargar el podio.";$("ranking").textContent="Comprueba la conexión y las reglas de Firebase."}}
-async function history(){prev=$("final").classList.contains("oculto")?"inicio":"final";section("historial");$("tabla").textContent="Cargando…";try{$("tabla").replaceChildren(table(await getRows()))}catch(e){$("tabla").textContent="No se pudo cargar el ranking. Comprueba Firebase y las reglas."}}
+async function loadFinal(){try{const rows=await getRows();podium(rows,"podio");$("ranking").replaceChildren(table(rows))}catch(e){console.error(e);$("podio").textContent="No se pudo cargar el podio: Firebase no está conectado.";$("ranking").textContent="Comprueba Firebase y la conexión."}}
+async function history(){prev=$("final").classList.contains("oculto")?"inicio":"final";section("historial");$("tabla").textContent="Cargando…";try{$("tabla").replaceChildren(table(await getRows()))}catch(e){$("tabla").textContent="No se pudo cargar el ranking. Comprueba Firebase."}}
 async function refresh(){$("tabla").textContent="Actualizando…";try{$("tabla").replaceChildren(table(await getRows()))}catch(e){$("tabla").textContent="No se pudo cargar el ranking."}}
 async function csv(){try{const a=sortRows(await getRows());if(!a.length){alert("Todavía no hay resultados.");return}const rows=[["Lugar","Equipo","Puntos","Aciertos","Total","Fecha"],...a.map((r,i)=>[i+1,r.nombre,r.puntos,r.aciertos,r.total,r.fecha||r.fechaISO])],content=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n"),blob=new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),aTag=document.createElement("a");aTag.href=url;aTag.download="ranking-compartido-job.csv";document.body.appendChild(aTag);aTag.click();aTag.remove();URL.revokeObjectURL(url)}catch(e){alert("No se pudo descargar: revisa Firebase y las reglas.")}}
-$("comenzar").onclick=begin;$("form").onsubmit=e=>{e.preventDefault();answer(false)};$("equipo").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();begin()}};$("repetir").onclick=()=>{$("equipo").value=nombre;begin()};$("inicioBtn").onclick=()=>section("inicio");$("verHistorial").onclick=history;$("cerrar").onclick=()=>section(prev);$("actualizar").onclick=refresh;$("csv").onclick=csv;$("csv2").onclick=csv;$("verQR").onclick=()=>{const u=location.href.split("#")[0];$("url").textContent=u;$("qr").src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data="+encodeURIComponent(u);$("zonaQR").classList.toggle("oculto")};
+$("comenzar").onclick=begin;$("form").onsubmit=e=>{e.preventDefault();answer(false)};$("equipo").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();begin()}};$("repetir").onclick=()=>{$("equipo").value=nombre;begin()};$("inicioBtn").onclick=()=>section("inicio");$("verHistorial").onclick=history;$("cerrar").onclick=()=>section(prev);$("actualizar").onclick=refresh;$("csv").onclick=csv;$("csv2").onclick=csv;
+$("verQR").onclick=()=>{const u=location.href.split("#")[0];$("url").textContent=u;$("qr").src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data="+encodeURIComponent(u);$("zonaQR").classList.toggle("oculto")};
 startFirebase();
 </script></body></html>
