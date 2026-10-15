@@ -22,19 +22,45 @@ const firebaseConfig={
  messagingSenderId:"902225727926",
  appId:"1:902225727926:web:646545b552e20493e2f117"
 };
-const DURACION=40,RUTA="resultados_job";
-const preguntas=[
-{nivel:"Nivel 1 · Medio",antes:"Hubo en tierra de ",despues:" un varón llamado Job; y era este hombre perfecto y recto, temeroso de Dios y apartado del mal.",respuestas:["uz"],mostrar:"Uz",cita:"Job 1:1"},
-{nivel:"Nivel 2 · Medio",antes:"Job era temeroso de Dios y apartado del ",despues:".",respuestas:["mal"],mostrar:"mal",cita:"Job 1:1"},
-{nivel:"Nivel 3 · Intermedio",antes:"Y le nacieron siete hijos y tres ",despues:".",respuestas:["hijas"],mostrar:"hijas",cita:"Job 1:2"},
-{nivel:"Nivel 4 · Intermedio",antes:"Su hacienda era siete mil ovejas, tres mil camellos, quinientas yuntas de bueyes, quinientas asnas y muchísimos ",despues:".",respuestas:["criados"],mostrar:"criados",cita:"Job 1:3"},
-{nivel:"Nivel 5 · Avanzado",antes:"Quizá habrán pecado mis hijos, y habrán ",despues:" contra Dios en sus corazones.",respuestas:["blasfemado"],mostrar:"blasfemado",cita:"Job 1:5"},
-{nivel:"Nivel 6 · Avanzado",antes:"Entre los que se presentaron delante de Jehová también vino ",despues:".",respuestas:["satanas"],mostrar:"Satanás",cita:"Job 1:6"},
-{nivel:"Nivel 7 · Difícil",antes:"¿Acaso teme Job a Dios de ",despues:"?",respuestas:["balde"],mostrar:"balde",cita:"Job 1:9"},
-{nivel:"Nivel 8 · Muy difícil",antes:"Solamente no pongas tu mano sobre ",despues:".",respuestas:["el"],mostrar:"él",cita:"Job 1:12"},
-{nivel:"Nivel 9 · Modo rabino",antes:"Fuego de Dios cayó del cielo, que quemó las ovejas y a los ",despues:".",respuestas:["pastores"],mostrar:"pastores",cita:"Job 1:16"},
-{nivel:"Nivel 10 · Modo rabino",antes:"Jehová dio, y Jehová ",despues:"; sea el nombre de Jehová bendito.",respuestas:["quito"],mostrar:"quitó",cita:"Job 1:21"}
+const DURACION=40,RUTA="r
+ 
+const bancoPreguntas = [
+{nivel:"Medio",antes:"Hubo en tierra de ",despues:" un varón llamado Job.",respuestas:["uz"],mostrar:"Uz",cita:"Job 1:1"},
+{nivel:"Medio",antes:"Job era perfecto y ",despues:", temeroso de Dios.",respuestas:["recto"],mostrar:"recto",cita:"Job 1:1"},
+{nivel:"Medio",antes:"Job estaba apartado del ",despues:".",respuestas:["mal"],mostrar:"mal",cita:"Job 1:1"},
+{nivel:"Medio",antes:"A Job le nacieron siete hijos y tres ",despues:".",respuestas:["hijas"],mostrar:"hijas",cita:"Job 1:2"},
+{nivel:"Medio",antes:"Job tenía siete mil ",despues:".",respuestas:["ovejas"],mostrar:"ovejas",cita:"Job 1:3"},
+{nivel:"Medio",antes:"Job tenía tres mil ",despues:".",respuestas:["camellos"],mostrar:"camellos",cita:"Job 1:3"},
+{nivel:"Medio",antes:"Job tenía quinientas yuntas de ",despues:".",respuestas:["bueyes"],mostrar:"bueyes",cita:"Job 1:3"},
+{nivel:"Medio",antes:"Job tenía quinientas ",despues:".",respuestas:["asnas"],mostrar:"asnas",cita:"Job 1:3"},
+{nivel:"Medio",antes:"Job tenía muchísimos ",despues:".",respuestas:["criados"],mostrar:"criados",cita:"Job 1:3"},
+{nivel:"Medio",antes:"Los hijos de Job hacían banquetes en sus ",despues:".",respuestas:["casas"],mostrar:"casas",cita:"Job 1:4"},
+{nivel:"Intermedio",antes:"Job enviaba a llamar a sus tres ",despues:".",respuestas:["hermanas"],mostrar:"hermanas",cita:"Job 1:4"},
+{nivel:"Intermedio",antes:"Job enviaba a sus hijos y los ",despues:".",respuestas:["santificaba"],mostrar:"santificaba",cita:"Job 1:5"},
+{nivel:"Intermedio",antes:"Job ofrecía ",despues:" conforme al número de todos ellos.",respuestas:["holocaustos"],mostrar:"holocaustos",cita:"Job 1:5"},
+{nivel:"Intermedio",antes:"Quizá mis hijos habrán ",despues:" contra Dios en sus corazones.",respuestas:["blasfemado"],mostrar:"blasfemado",cita:"Job 1:5"},
+{nivel:"Intermedio",antes:"Un día vinieron delante de Jehová los hijos de ",despues:".",respuestas:["dios"],mostrar:"Dios",cita:"Job 1:6"},
+{nivel:"Intermedio",antes:"Entre ellos también vino ",despues:".",respuestas:["satanas"],mostrar:"Satanás",cita:"Job 1:6"},
+{nivel:"Intermedio",antes:"Jehová preguntó a Satanás: ¿De dónde ",despues:".",respuestas:["vienes"],mostrar:"vienes",cita:"Job 1:7"},
+{nivel:"Intermedio",antes:"Satanás dijo que venía de rodear la tierra y de ",despues:" por ella.",respuestas:["andar"],mostrar:"andar",cita:"Job 1:7"},
+{nivel:"Avanzado",antes:"No había otro como Job en la tierra: era perfecto y ",despues:".",respuestas:["recto"],mostrar:"recto",cita:"Job 1:8"},
+{nivel:"Avanzado",antes:"¿Acaso teme Job a Dios de ",despues:"?",respuestas:["balde"],mostrar:"balde",cita:"Job 1:9"},
+{nivel:"Avanzado",antes:"Dios había cercado a Job, su casa y todo lo que ",despues:".",respuestas:["tenia","tiene"],mostrar:"tenía",cita:"Job 1:10"},
+{nivel:"Avanzado",antes:"Al trabajo de sus manos has dado ",despues:".",respuestas:["bendicion"],mostrar:"bendición",cita:"Job 1:10"},
+{nivel:"Avanzado",antes:"Extiende tu mano y toca todo lo que ",despues:".",respuestas:["tiene"],mostrar:"tiene",cita:"Job 1:11"},
+{nivel:"Avanzado",antes:"Todo lo que tiene está en tu ",despues:".",respuestas:["mano"],mostrar:"mano",cita:"Job 1:12"},
+{nivel:"Avanzado",antes:"Solamente no pongas tu mano sobre ",despues:".",respuestas:["el"],mostrar:"él",cita:"Job 1:12"},
+{nivel:"Difícil",antes:"Los hijos de Job comían y bebían en casa de su hermano el ",despues:".",respuestas:["primogenito"],mostrar:"primogénito",cita:"Job 1:13"},
+{nivel:"Difícil",antes:"Los sabeos mataron a los criados a filo de ",despues:".",respuestas:["espada"],mostrar:"espada",cita:"Job 1:15"},
+{nivel:"Difícil",antes:"Fuego de Dios cayó del ",despues:" y quemó las ovejas y a los pastores.",respuestas:["cielo"],mostrar:"cielo",cita:"Job 1:16"},
+{nivel:"Modo rabino",antes:"Un gran viento vino del lado del ",despues:" e hirió las cuatro esquinas de la casa.",respuestas:["desierto"],mostrar:"desierto",cita:"Job 1:19"},
+{nivel:"Modo rabino",antes:"Job se levantó, rasgó su manto y ",despues:" su cabeza.",respuestas:["rasuro"],mostrar:"rasuró",cita:"Job 1:20"},
+{nivel:"Modo rabino",antes:"Job se postró en tierra y ",despues:".",respuestas:["adoro"],mostrar:"adoró",cita:"Job 1:20"},
+{nivel:"Modo rabino",antes:"Desnudo salí del vientre de mi madre y desnudo volveré ",despues:".",respuestas:["alla"],mostrar:"allá",cita:"Job 1:21"},
+{nivel:"Modo rabino",antes:"Jehová dio, y Jehová ",despues:".",respuestas:["quito"],mostrar:"quitó",cita:"Job 1:21"},
+{nivel:"Modo rabino",antes:"En todo esto no pecó Job ni atribuyó a Dios ",despues:" alguna.",respuestas:["desproposito"],mostrar:"despropósito",cita:"Job 1:22"}
 ];
+ 
 const $=id=>document.getElementById(id);
 let db=null,user=null,fb=false,idx=0,pts=0,nombre="",contestada=false,seg=DURACION,timer=null,next=null,log=[],prev="inicio",audio=null,sonidoOn=true;
 try{sonidoOn=localStorage.getItem("job_sonido")!=="0"}catch(e){}
